@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Scoops - My Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&amp;family=Berkshire+Swash&amp;family=Oswald:wght@200..700&amp;display=swap');
+        
+        body {
+            font-family: "Archivo", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #646464;
+        }
+
+        :root {
+            --e-global-color-primary: #ffffff;
+            --e-global-color-secondary: #0f0200;
+            --e-global-color-accent: #f83d8e;
+            --e-global-color-text: #646464;
+            --e-global-color-white: #ffffff;
+            --e-global-color-black: #000000;
+            --e-global-color-light-grayish-violet: #cfb6e2;
+            --e-global-color-dark-moderate-violet: #683292;
+            --e-global-color-gradient-1: #efd7ef;
+            --e-global-color-gradient-2: #f5f9fc;
+            --e-global-color-gradient-3: #f8eae1;
+            --e-global-color-gradient-4: #eaf8f9;
+            --e-global-color-star-yellow: #fbab2a;
+            --e-global-color-light-yellow: #ffc045;
+            --e-global-color-very-light-grayish-violet: #f6f3f9;
+            --e-global-color-border: 1px solid #e5e5e5;
+            --e-global-color-shop-text: #787878;
+            --e-global-color-light-red: #ff6565;
+            --e-global-color-pure-red: #ff0000;
+        }
+        
+        h1 {
+            font-size: 112px;
+            line-height: 108px;
+            font-weight: 400;
+            font-family: "Berkshire Swash", serif;
+        }
+        
+        h2 {
+            font-size: 60px;
+            line-height: 64px;
+            font-weight: 400;
+            color: var(--e-global-color-secondary);
+            font-family: "Berkshire Swash", serif;
+        }
+        
+        h3 {
+            font-size: 40px;
+            line-height: 40px;
+            font-weight: 400;
+            color: var(--e-global-color-secondary);
+            font-family: "Berkshire Swash", serif;
+        }
+        
+        h4 {
+            font-size: 30px;
+            line-height: 30px;
+            font-weight: 600;
+        }
+        
+        h5 {
+            font-size: 22px;
+            line-height: 22px;
+            font-weight: 700;
+        }
+        
+        h6 {
+            font-size: 20px;
+            line-height: 24px;
+            font-weight: 700;
+            color: var(--e-global-color-secondary);
+        }
+        
+        p {
+            font-size: 20px;
+            line-height: 26px;
+            font-weight: 400;
+            color: var(--e-global-color-text);
+        }
+        
+        .text-size-18 {
+            font-size: 18px;
+            line-height: 26px;
+            font-weight: 400;
+            color: var(--e-global-color-text);
+        }
+        
+        .text-size-16 {
+            font-size: 16px;
+            line-height: 24px;
+            font-weight: 400;
+            color: var(--e-global-color-text);
+        }
+        
+        .text-size-14 {
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 400;
+            color: var(--e-global-color-text);
+        }
+        
+        .all_button {
+            font-size: 16px;
+            line-height: 16px;
+            font-weight: 600;
+            text-align: center;
+            border-radius: 30px;
+            position: relative;
+            display: inline-block;
+            color: var(--e-global-color-white);
+            background: var(--e-global-color-accent);
+            box-shadow: 0px 3px 22px 3px rgb(248 61 142 / 31%);
+            font-family: "Archivo", sans-serif;
+            transition: all 0.8s ease-in-out;
+            padding: 12px 24px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .all_button:hover {
+            color: var(--e-global-color-white);
+            background: var(--e-global-color-secondary);
+        }
+        
+        .all_button i {
+            font-size: 12px;
+            margin-left: 18px;
+            transition: all 0.8s ease-in-out;
+            color: var(--e-global-color-white);
+        }
+        
+        .all_button:hover i {
+            transform: translateX(4px);
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Layout styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, var(--e-global-color-dark-moderate-violet), var(--e-global-color-accent));
+            color: var(--e-global-color-white);
+            padding: 40px 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .profile-header h1 {
+            color: var(--e-global-color-white);
+            margin-bottom: 10px;
+        }
+        
+        .profile-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+        
+        .sidebar {
+            background-color: var(--e-global-color-white);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            height: fit-content;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .section {
+            background-color: var(--e-global-color-white);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: var(--e-global-color-border);
+            padding-bottom: 15px;
+        }
+        
+        /* Profile info styles */
+        .profile-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--e-global-color-light-grayish-violet);
+            margin: 0 auto 20px;
+            display: block;
+        }
+        
+        .change-photo {
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--e-global-color-accent);
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: var(--e-global-color-border);
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: var(--e-global-color-secondary);
+        }
+        
+        /* Navigation styles */
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .nav-item {
+            margin-bottom: 10px;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: 10px;
+            color: var(--e-global-color-text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--e-global-color-very-light-grayish-violet);
+            color: var(--e-global-color-dark-moderate-violet);
+        }
+        
+        .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Preferences styles */
+        .preferences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .preference-card {
+            background-color: var(--e-global-color-very-light-grayish-violet);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .preference-icon {
+            font-size: 24px;
+            color: var(--e-global-color-dark-moderate-violet);
+            margin-bottom: 10px;
+        }
+        
+        /* Order history styles */
+        .order-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 10px;
+            border: var(--e-global-color-border);
+            margin-bottom: 15px;
+        }
+        
+        .order-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .order-details {
+            flex-grow: 1;
+        }
+        
+        .order-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* Wishlist styles */
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .wishlist-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .wishlist-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .wishlist-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        
+        .wishlist-info {
+            padding: 15px;
+        }
+        
+        /* Address styles */
+        .address-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .address-card {
+            border: var(--e-global-color-border);
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .address-default {
+            border-color: var(--e-global-color-accent);
+        }
+        
+        .address-actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .address-action {
+            background: none;
+            border: none;
+            color: var(--e-global-color-text);
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .address-action:hover {
+            color: var(--e-global-color-accent);
+        }
+        
+        .default-badge {
+            background-color: var(--e-global-color-accent);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        /* Rewards styles */
+        .rewards-container {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .points-display {
+            background: linear-gradient(135deg, var(--e-global-color-dark-moderate-violet), var(--e-global-color-accent));
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            min-width: 200px;
+        }
+        
+        .points-value {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .badges-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: var(--e-global-color-light-yellow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        /* Reviews styles */
+        .review-item {
+            border-bottom: var(--e-global-color-border);
+            padding: 15px 0;
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .review-rating {
+            color: var(--e-global-color-star-yellow);
+        }
+        
+        /* Settings styles */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: var(--e-global-color-border);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--e-global-color-accent);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .profile-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                order: 2;
+            }
+            
+            .main-content {
+                order: 1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 60px;
+                line-height: 64px;
+            }
+            
+            h2 {
+                font-size: 40px;
+                line-height: 44px;
+            }
+            
+            h3 {
+                font-size: 30px;
+                line-height: 34px;
+            }
+            
+            .preferences-grid, .wishlist-grid, .address-grid, .settings-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .rewards-container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-header">
+            <h3>My Sweet Profile</h3>
+            <p class="text-size-18">Manage your account, preferences, and orders</p>
+        </div>
+        
+        <div class="profile-content">
+            <div class="sidebar">
+                <div class="profile-info">
+                    <img src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-pic">
+                    <span class="change-photo text-size-16">Change Photo</span>
+                    <h4>Emma Johnson</h4>
+                    <p class="text-size-16">Ice Cream Enthusiast</p>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#profile" class="nav-link active">
+                            <i class="fas fa-user"></i> Profile Info
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#preferences" class="nav-link">
+                            <i class="fas fa-heart"></i> Preferences
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#orders" class="nav-link">
+                            <i class="fas fa-history"></i> Order History
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#wishlist" class="nav-link">
+                            <i class="fas fa-star"></i> Wishlist
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#addresses" class="nav-link">
+                            <i class="fas fa-map-marker-alt"></i> Address Book
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#rewards" class="nav-link">
+                            <i class="fas fa-award"></i> Rewards
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#reviews" class="nav-link">
+                            <i class="fas fa-comment"></i> My Reviews
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#settings" class="nav-link">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="main-content">
+                <!-- Profile Info Section -->
+                <section id="profile" class="section">
+                    <div class="section-header">
+                        <h3>Profile Information</h3>
+                        <button class="all_button">Edit Profile</button>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Full Name</span>
+                        <span>Emma Johnson</span>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Email</span>
+                        <span>emma.johnson@example.com</span>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Phone</span>
+                        <span>(555) 123-4567</span>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Member Since</span>
+                        <span>March 2022</span>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Password</span>
+                        <a href="#" class="all_button" style="padding: 8px 16px;">Change Password</a>
+                    </div>
+                </section>
+                
+                <!-- Preferences Section -->
+                <section id="preferences" class="section" style="display: none;">
+                    <div class="section-header">
+                        <h3>My Preferences</h3>
+                        <button class="all_button">Update Preferences</button>
+                    </div>
+                    
+                    <h5>Favorite Flavors</h5>
+                    <div class="preferences-grid">
+                        <div class="preference-card">
+                            <div class="preference-icon">
+                                <i class="fas fa-ice-cream"></i>
+                            </div>
+                            <h6>Chocolate Fudge</h6>
+                        </div>
+                        <div class="preference-card">
+                            <div class="preference-icon">
+                                <i class="fas fa-ice-cream"></i>
+                            </div>
+                            <h6>Strawberry Swirl</h6>
+                        </div>
+                        <div class="preference-card">
+                            <div class="preference-icon">
+                                <i class="fas fa-ice-cream"></i>
+                            </div>
+                            <h6>Vanilla Bean</h6>
+                        </div>
+                    </div>
+                    
+                    <h5 style="margin-top: 30px;">Serving Preferences</h5>
+                    <div class="preferences-grid">
+                        <div class="preference-card">
+                            <div class="preference-icon">
+                                <i class="fas fa-cone"></i>
+                            </div>
+                            <h6>Waffle Cone</h6>
+                        </div>
+                        <div class="preference-card">
+                            <div class="preference-icon">
+                                <i class="fas fa-mug-hot"></i>
+                            </div>
+                            <h6>In a Cup</h6>
+                        </div>
+                    </div>
+                    
+                    <h5 style="margin-top: 30px;">Dietary Preferences</h5>
+                    <div class="preferences-grid">
+                        <div class="preference-card">
+                            <div class="preference-icon">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <h6>No Dietary Restrictions</h6>
+                        </div>
+                    </div>
+                    
+                    <h5 style="margin-top: 30px;">Favorite Toppings</h5>
+                    <div class="preferences-grid">
+                        <div class="preference-card">
+                            <div class="preference-icon">
+                                <i class="fas fa-candy-cane"></i>
+                            </div>
+                            <h6>Chocolate Chips</h6>
+                        </div>
+                        <div class="preference-card">
+                            <div class="preference-icon">
+                                <i class="fas fa-pepper-hot"></i>
+                            </div>
+                            <h6>Caramel Sauce</h6>
+                        </div>
+                        <div class="preference-card">
+                            <div class="preference-icon">
+                                <i class="fas fa-cookie"></i>
+                            </div>
+                            <h6>Crushed Nuts</h6>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Order History Section -->
+                <section id="orders" class="section" style="display: none;">
+                    <div class="section-header">
+                        <h3>Order History</h3>
+                        <button class="all_button">View All Orders</button>
+                    </div>
+                    
+                    <div class="order-item">
+                        <img src="https://via.placeholder.com/80" alt="Ice Cream" class="order-image">
+                        <div class="order-details">
+                            <h6>Double Scoop Delight</h6>
+                            <p class="text-size-14">Chocolate Fudge + Strawberry Swirl in Waffle Cone</p>
+                            <p class="text-size-14">Order Date: June 15, 2023</p>
+                        </div>
+                        <div class="order-actions">
+                            <button class="all_button" style="padding: 8px 16px;">Reorder</button>
+                            <button class="all_button" style="padding: 8px 16px; background: var(--e-global-color-secondary);">View Details</button>
+                        </div>
+                    </div>
+                    
+                    <div class="order-item">
+                        <img src="https://via.placeholder.com/80" alt="Ice Cream" class="order-image">
+                        <div class="order-details">
+                            <h6>Sundae Special</h6>
+                            <p class="text-size-14">Vanilla Bean with Hot Fudge and Nuts</p>
+                            <p class="text-size-14">Order Date: June 10, 2023</p>
+                        </div>
+                        <div class="order-actions">
+                            <button class="all_button" style="padding: 8px 16px;">Reorder</button>
+                            <button class="all_button" style="padding: 8px 16px; background: var(--e-global-color-secondary);">View Details</button>
+                        </div>
+                    </div>
+                    
+                    <div class="order-item">
+                        <img src="https://via.placeholder.com/80" alt="Ice Cream" class="order-image">
+                        <div class="order-details">
+                            <h6>Family Pack</h6>
+                            <p class="text-size-14">4 Scoops Assorted Flavors</p>
+                            <p class="text-size-14">Order Date: June 5, 2023</p>
+                        </div>
+                        <div class="order-actions">
+                            <button class="all_button" style="padding: 8px 16px;">Reorder</button>
+                            <button class="all_button" style="padding: 8px 16px; background: var(--e-global-color-secondary);">View Details</button>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Wishlist Section -->
+                <section id="wishlist" class="section" style="display: none;">
+                    <div class="section-header">
+                        <h3>My Wishlist</h3>
+                        <button class="all_button">Add More</button>
+                    </div>
+                    
+                    <div class="wishlist-grid">
+                        <div class="wishlist-item">
+                            <img src="https://via.placeholder.com/200x150" alt="Ice Cream" class="wishlist-image">
+                            <div class="wishlist-info">
+                                <h6>Rocky Road Dream</h6>
+                                <p class="text-size-14">Chocolate ice cream with marshmallows and almonds</p>
+                                <button class="all_button" style="padding: 8px 16px; width: 100%; margin-top: 10px;">Add to Cart</button>
+                            </div>
+                        </div>
+                        
+                        <div class="wishlist-item">
+                            <img src="https://via.placeholder.com/200x150" alt="Ice Cream" class="wishlist-image">
+                            <div class="wishlist-info">
+                                <h6>Mint Chocolate Chip</h6>
+                                <p class="text-size-14">Refreshing mint with chocolate chunks</p>
+                                <button class="all_button" style="padding: 8px 16px; width: 100%; margin-top: 10px;">Add to Cart</button>
+                            </div>
+                        </div>
+                        
+                        <div class="wishlist-item">
+                            <img src="https://via.placeholder.com/200x150" alt="Ice Cream" class="wishlist-image">
+                            <div class="wishlist-info">
+                                <h6>Cookie Dough Bliss</h6>
+                                <p class="text-size-14">Vanilla ice cream with chunks of cookie dough</p>
+                                <button class="all_button" style="padding: 8px 16px; width: 100%; margin-top: 10px;">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Address Book Section -->
+                <section id="addresses" class="section" style="display: none;">
+                    <div class="section-header">
+                        <h3>Address Book</h3>
+                        <button class="all_button">Add New Address</button>
+                    </div>
+                    
+                    <div class="address-grid">
+                        <div class="address-card address-default">
+                            <div class="address-actions">
+                                <button class="address-action"><i class="fas fa-edit"></i></button>
+                                <button class="address-action"><i class="fas fa-trash"></i></button>
+                            </div>
+                            <h6>Home <span class="default-badge">Default</span></h6>
+                            <p class="text-size-16">123 Sweet Street<br>Ice Cream City, IC 12345<br>United States</p>
+                        </div>
+                        
+                        <div class="address-card">
+                            <div class="address-actions">
+                                <button class="address-action"><i class="fas fa-edit"></i></button>
+                                <button class="address-action"><i class="fas fa-trash"></i></button>
+                            </div>
+                            <h6>Work</h6>
+                            <p class="text-size-16">456 Dessert Avenue<br>Sugar Town, ST 67890<br>United States</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Rewards Section -->
+                <section id="rewards" class="section" style="display: none;">
+                    <div class="section-header">
+                        <h3>My Rewards</h3>
+                        <button class="all_button">Redeem Points</button>
+                    </div>
+                    
+                    <div class="rewards-container">
+                        <div class="points-display">
+                            <p class="text-size-16">Your Points</p>
+                            <div class="points-value">1,250</div>
+                            <p class="text-size-14">Ice Cream Explorer</p>
+                        </div>
+                        
+                        <div>
+                            <h5>Your Badges</h5>
+                            <div class="badges-container">
+                                <div class="badge">
+                                    <i class="fas fa-ice-cream"></i>
+                                </div>
+                                <div class="badge">
+                                    <i class="fas fa-crown"></i>
+                                </div>
+                                <div class="badge">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="badge">
+                                    <i class="fas fa-birthday-cake"></i>
+                                </div>
+                            </div>
+                            
+                            <h5 style="margin-top: 20px;">Available Rewards</h5>
+                            <div class="text-size-16">
+                                <p>• 100 points = Free topping</p>
+                                <p>• 250 points = Free single scoop</p>
+                                <p>• 500 points = Free sundae</p>
+                                <p>• 1000 points = Free family pack</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Reviews Section -->
+                <section id="reviews" class="section" style="display: none;">
+                    <div class="section-header">
+                        <h3>My Reviews</h3>
+                        <button class="all_button">Write a Review</button>
+                    </div>
+                    
+                    <div class="review-item">
+                        <div class="review-header">
+                            <h6>Chocolate Fudge Fantasy</h6>
+                            <div class="review-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-size-16">Absolutely delicious! The chocolate is rich and creamy, exactly what I was looking for. Will definitely order again!</p>
+                        <p class="text-size-14">Posted on June 12, 2023</p>
+                    </div>
+                    
+                    <div class="review-item">
+                        <div class="review-header">
+                            <h6>Strawberry Swirl Sensation</h6>
+                            <div class="review-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <p class="text-size-16">Great flavor with real strawberry pieces. The swirl is a nice touch. Would have liked it a bit sweeter though.</p>
+                        <p class="text-size-14">Posted on May 28, 2023</p>
+                    </div>
+                </section>
+                
+                <!-- Settings Section -->
+                <section id="settings" class="section" style="display: none;">
+                    <div class="section-header">
+                        <h3>Account Settings</h3>
+                        <button class="all_button">Save Changes</button>
+                    </div>
+                    
+                    <div class="settings-grid">
+                        <div>
+                            <h5>Notification Preferences</h5>
+                            <div class="setting-item">
+                                <span class="text-size-16">Email Notifications</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <span class="text-size-16">Push Notifications</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <span class="text-size-16">SMS Alerts</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h5>Privacy Settings</h5>
+                            <div class="setting-item">
+                                <span class="text-size-16">Show my reviews publicly</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <span class="text-size-16">Allow personalized recommendations</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <span class="text-size-16">Share data with partners</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h5 style="margin-top: 30px;">Theme Preferences</h5>
+                    <div class="setting-item">
+                        <span class="text-size-16">Dark Mode</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation functionality
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.section');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Hide all sections
+                    sections.forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    
+                    // Show the target section
+                    const targetId = this.getAttribute('href').substring(1);
+                    document.getElementById(targetId).style.display = 'block';
+                });
+            });
+            
+            // Show profile section by default
+            document.getElementById('profile').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
