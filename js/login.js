@@ -52,13 +52,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Check if response is successful (status 200-299)
             if (response.ok) {
-                // Get response body
-                const responseText = await response.text();
-                console.log('Response body:', responseText);
+                // Get response body as JSON
+                const userData = await response.json();
+                console.log('Response body:', userData);
                 
                 console.log('Login successful! Redirecting...');
                 
-                // Store user email and login status
+                // Store complete user data
+                sessionStorage.setItem('userData', JSON.stringify(userData));
                 sessionStorage.setItem('userEmail', email);
                 sessionStorage.setItem('isLoggedIn', 'true');
                 
@@ -73,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Optional: Store in localStorage if "Remember me" is checked
                 const rememberMe = document.getElementById('remember-me').checked;
                 if (rememberMe) {
+                    localStorage.setItem('userData', JSON.stringify(userData));
                     localStorage.setItem('userEmail', email);
                     localStorage.setItem('isLoggedIn', 'true');
                     if (token) {
