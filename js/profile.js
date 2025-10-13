@@ -229,7 +229,10 @@ function showEditAddressModal(address, addressType, isDefault) {
             </div>
             <div class="modal-footer">
                 <button class="modal-btn modal-btn-secondary close-modal">Cancel</button>
-                <button class="modal-btn save-address-btn">Save Changes</button>
+                <button class="modal-btn save-address-btn">
+                    <span class="btn-text">Save Changes</span>
+                    <i class="fas fa-spinner fa-spin" style="display: none;"></i>
+                </button>
             </div>
         </div>
     `;
@@ -245,27 +248,87 @@ function showEditAddressModal(address, addressType, isDefault) {
     });
     
     const saveBtn = modal.querySelector('.save-address-btn');
-    saveBtn.addEventListener('click', function() {
+    saveBtn.addEventListener('click', async function() {
         const form = modal.querySelector('#editAddressForm');
         const formData = new FormData(form);
         
-        // Update address in memory
-        const index = window.userAddresses.findIndex(a => a.id === address.id);
-        if (index !== -1) {
-            window.userAddresses[index] = {
-                ...window.userAddresses[index],
-                houseNo: formData.get('houseNo'),
-                street: formData.get('street'),
-                city: formData.get('city'),
-                state: formData.get('state'),
-                postalCode: formData.get('postalCode'),
-                country: formData.get('country')
-            };
+        // Get user email and auth token from sessionStorage
+        const userEmail = sessionStorage.getItem('userEmail');
+        const authToken = sessionStorage.getItem('authToken');
+        
+        if (!userEmail || !authToken) {
+            alert('Session expired. Please login again.');
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        // Prepare updated address data
+        const updatedAddress = {
+            id: address.id,
+            houseNo: formData.get('houseNo'),
+            street: formData.get('street'),
+            city: formData.get('city'),
+            state: formData.get('state') || '',
+            postalCode: formData.get('postalCode'),
+            country: formData.get('country')
+        };
+        
+        // Show loading state
+        const btnText = saveBtn.querySelector('.btn-text');
+        const spinner = saveBtn.querySelector('.fa-spinner');
+        btnText.textContent = 'Saving...';
+        spinner.style.display = 'inline-block';
+        saveBtn.disabled = true;
+        
+        try {
+            // Make API call to update address (adjust endpoint as needed for your backend)
+            const response = await fetch(`http://localhost:8081/adress/update/${address.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': authToken
+                },
+                body: JSON.stringify(updatedAddress)
+            });
             
-            // Update display
-            updateAddresses(window.userAddresses);
-            modal.remove();
-            alert('Address updated successfully!');
+            if (response.ok) {
+                // Update address in memory
+                const index = window.userAddresses.findIndex(a => a.id === address.id);
+                if (index !== -1) {
+                    window.userAddresses[index] = updatedAddress;
+                    
+                    // Update userData in sessionStorage
+                    const userData = JSON.parse(sessionStorage.getItem('userData'));
+                    userData.adresses = window.userAddresses;
+                    sessionStorage.setItem('userData', JSON.stringify(userData));
+                    
+                    // Update display
+                    updateAddresses(window.userAddresses);
+                    modal.remove();
+                    alert('Address updated successfully!');
+                }
+            } else {
+                const errorText = await response.text();
+                console.error('Failed to update address:', errorText);
+                
+                if (response.status === 401) {
+                    alert('Authentication failed. Please login again.');
+                    window.location.href = 'login.html';
+                } else {
+                    alert('Failed to update address. Please try again.');
+                }
+                // Reset button state
+                btnText.textContent = 'Save Changes';
+                spinner.style.display = 'none';
+                saveBtn.disabled = false;
+            }
+        } catch (error) {
+            console.error('Error updating address:', error);
+            alert('Network error. Please try again.');
+            // Reset button state
+            btnText.textContent = 'Save Changes';
+            spinner.style.display = 'none';
+            saveBtn.disabled = false;
         }
     });
     
@@ -315,7 +378,10 @@ function showAddAddressModal() {
             </div>
             <div class="modal-footer">
                 <button class="modal-btn modal-btn-secondary close-modal">Cancel</button>
-                <button class="modal-btn add-address-btn">Add Address</button>
+                <button class="modal-btn add-address-btn">
+                    <span class="btn-text">Add Address</span>
+                    <i class="fas fa-spinner fa-spin" style="display: none;"></i>
+                </button>
             </div>
         </div>
     `;
@@ -331,25 +397,118 @@ function showAddAddressModal() {
     });
     
     const addBtn = modal.querySelector('.add-address-btn');
-    addBtn.addEventListener('click', function() {
+    addBtn.addEventListener('click', async function() {
         const form = modal.querySelector('#addAddressForm');
+        
+        // Check form validity
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+        
         const formData = new FormData(form);
         
-        // Create new address
-        const newAddress = {
-            id: Math.max(...window.userAddresses.map(a => a.id), 0) + 1,
+        // Get user email and auth token from sessionStorage
+        const userEmail = sessionStorage.getItem('userEmail');
+        const authToken = sessionStorage.getItem('authToken');
+        
+        if (!userEmail || !authToken) {
+            alert('Session expired. Please login again.');
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        // Prepare address data
+        const addressData = {
             houseNo: formData.get('houseNo'),
             street: formData.get('street'),
             city: formData.get('city'),
-            state: formData.get('state'),
+            state: formData.get('state') || '',
             postalCode: formData.get('postalCode'),
             country: formData.get('country')
         };
         
-        window.userAddresses.push(newAddress);
-        updateAddresses(window.userAddresses);
-        modal.remove();
-        alert('Address added successfully!');
+        // Show loading state
+        const btnText = addBtn.querySelector('.btn-text');
+        const spinner = addBtn.querySelector('.fa-spinner');
+        btnText.textContent = 'Adding...';
+        spinner.style.display = 'inline-block';
+        addBtn.disabled = true;
+        
+        try {
+            console.log('Sending address to API:', addressData);
+            console.log('Using email:', userEmail);
+            console.log('Using token:', authToken);
+            
+            // Make API call to backend
+            const response = await fetch(`http://localhost:8081/adress/${userEmail}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': authToken
+                },
+                body: JSON.stringify(addressData)
+            });
+            
+            console.log('Response status:', response.status);
+            
+            if (response.ok) {
+                const responseData = await response.json();
+                console.log('Address added successfully:', responseData);
+                
+                // Add the new address to the local array with the ID from backend
+                   // Add the new address to the local array
+    const newAddress = {
+        id: responseData.id || Math.max(...window.userAddresses.map(a => a.id || 0), 0) + 1,
+        houseNo: responseData.houseNo,
+        street: responseData.street,
+        city: responseData.city,
+        state: responseData.state,
+        postalCode: responseData.postalCode,
+        country: responseData.country
+    };
+                
+                window.userAddresses.push(newAddress);
+                
+                // Update userData in sessionStorage
+                const userData = JSON.parse(sessionStorage.getItem('userData'));
+                userData.adresses = window.userAddresses;
+                sessionStorage.setItem('userData', JSON.stringify(userData));
+                
+                // Update the display
+                updateAddresses(window.userAddresses);
+                
+                // Close modal and show success
+                modal.remove();
+                alert('Address added successfully!');
+                
+            } else {
+                // Handle error responses
+                const errorText = await response.text();
+                console.error('Failed to add address:', errorText);
+                
+                if (response.status === 401) {
+                    alert('Authentication failed. Please login again.');
+                    window.location.href = 'login.html';
+                } else {
+                    alert('Failed to add address: ' + errorText);
+                }
+                
+                // Reset button state
+                btnText.textContent = 'Add Address';
+                spinner.style.display = 'none';
+                addBtn.disabled = false;
+            }
+            
+        } catch (error) {
+            console.error('Error adding address:', error);
+            alert('Network error: ' + error.message + '. Please try again.');
+            
+            // Reset button state
+            btnText.textContent = 'Add Address';
+            spinner.style.display = 'none';
+            addBtn.disabled = false;
+        }
     });
     
     modal.addEventListener('click', function(e) {
@@ -359,11 +518,50 @@ function showAddAddressModal() {
     });
 }
 
-function deleteAddress(addressId) {
+async function deleteAddress(addressId) {
     if (confirm('Are you sure you want to delete this address?')) {
-        window.userAddresses = window.userAddresses.filter(a => a.id !== addressId);
-        updateAddresses(window.userAddresses);
-        alert('Address deleted successfully!');
+        const authToken = sessionStorage.getItem('authToken');
+        
+        if (!authToken) {
+            alert('Session expired. Please login again.');
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        try {
+            // Make API call to delete address (adjust endpoint as needed for your backend)
+            const response = await fetch(`http://localhost:8081/adress/delete/${addressId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': authToken
+                }
+            });
+            
+            if (response.ok) {
+                window.userAddresses = window.userAddresses.filter(a => a.id !== addressId);
+                
+                // Update userData in sessionStorage
+                const userData = JSON.parse(sessionStorage.getItem('userData'));
+                userData.adresses = window.userAddresses;
+                sessionStorage.setItem('userData', JSON.stringify(userData));
+                
+                updateAddresses(window.userAddresses);
+                alert('Address deleted successfully!');
+            } else {
+                const errorText = await response.text();
+                console.error('Failed to delete address:', errorText);
+                
+                if (response.status === 401) {
+                    alert('Authentication failed. Please login again.');
+                    window.location.href = 'login.html';
+                } else {
+                    alert('Failed to delete address. Please try again.');
+                }
+            }
+        } catch (error) {
+            console.error('Error deleting address:', error);
+            alert('Network error. Please try again.');
+        }
     }
 }
 
@@ -491,6 +689,14 @@ function addModalStyles() {
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .modal-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
         
         .modal-btn:not(.modal-btn-secondary) {
@@ -498,7 +704,7 @@ function addModalStyles() {
             color: white;
         }
         
-        .modal-btn:not(.modal-btn-secondary):hover {
+        .modal-btn:not(.modal-btn-secondary):hover:not(:disabled) {
             background-color: #0f0200;
         }
         
@@ -509,6 +715,10 @@ function addModalStyles() {
         
         .modal-btn-secondary:hover {
             background-color: #e5e5e5;
+        }
+        
+        .fa-spinner {
+            font-size: 14px;
         }
     `;
     
