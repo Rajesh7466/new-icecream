@@ -775,7 +775,7 @@
             <input type="password" class="form-control" id="confirmPassword" required>
           </div>
 
-          <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+          <button type="submit" id="changePasswordBtn" class="btn btn-primary w-100">Save Changes</button>
         </form>
       </div>
 
@@ -1089,5 +1089,64 @@
 
 
 <script src="js/profile.js"></script>
+
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const changePasswordForm = document.getElementById('changePasswordForm');
+
+    changePasswordForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const currentPassword = document.getElementById('currentPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (newPassword !== confirmPassword) {
+            alert("New password and confirm password do not match!");
+            return;
+        }
+
+        const userEmail = sessionStorage.getItem('userEmail');
+        const token = JSON.parse(sessionStorage.getItem('userData'))?.token;
+
+        if (!userEmail || !token) {
+            alert("User not logged in!");
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8081/user/change/password/${userEmail}`, {
+                method: 'PUT', // assuming PUT method
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    current_Password: currentPassword,
+                    new_Password: newPassword
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                alert("Error: " + (errorData.message || "Failed to change password"));
+                return;
+            }
+
+            alert("Password changed successfully!");
+            // Optional: close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('changePasswordModal'));
+            modal.hide();
+
+            // Clear form
+            changePasswordForm.reset();
+        } catch (error) {
+            console.error(error);
+            alert("Something went wrong. Try again!");
+        }
+    });
+});
+
+</script> -->
 </body>
 </html>

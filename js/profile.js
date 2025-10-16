@@ -739,3 +739,74 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 100);
 });
+
+
+// start code for change password
+
+document.addEventListener('DOMContentLoaded', function() {
+    const changePasswordBtn = document.getElementById('changePasswordBtn');
+    if (changePasswordBtn) {
+        changePasswordBtn.addEventListener('click', function() {
+            const passwordModal = new bootstrap.Modal(document.getElementById('changePasswordModal'));
+            passwordModal.show();
+        });
+    }
+
+    const changePasswordForm = document.querySelector('#changePasswordModal form');
+    if (changePasswordForm) {
+        changePasswordForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const currentPassword = document.getElementById('currentPassword').value.trim();
+            const newPassword = document.getElementById('newPassword').value.trim();
+            const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+            if (newPassword !== confirmPassword) {
+                alert('New password and confirm password do not match.');
+                return;
+            }
+
+            const authToken = sessionStorage.getItem('authToken');
+            const userEmail = sessionStorage.getItem('userEmail');
+
+            if (!authToken || !userEmail) {
+                alert('Session expired. Please login again.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:8081/user/change/password/${userEmail}`, {
+                    method: 'POST', // or PUT depending on your backend
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': authToken
+                    },
+                    body: JSON.stringify({
+                       current_Password: currentPassword,
+                       new_Password: newPassword
+                    })
+                });
+
+                if (response.ok) {
+                    alert('Password changed successfully!');
+                    const modalEl = document.getElementById('changePasswordModal');
+                    const bsModal = bootstrap.Modal.getInstance(modalEl);
+                    bsModal.hide();
+                    changePasswordForm.reset();
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 1500);
+                } else {
+                    const errorText = await response.text();
+                    console.error('Failed to change password:', errorText);
+                    alert('Failed to change password: ' + errorText);
+                }
+            } catch (error) {
+                console.error('Error changing password:', error);
+                alert('Network error. Please try again.');
+            }
+        });
+    }
+});
+
