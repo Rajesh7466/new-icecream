@@ -59,13 +59,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Login successful! Redirecting...');
                 
                 // Store complete user data
-                sessionStorage.setItem('userData', JSON.stringify(userData));
-                sessionStorage.setItem('userEmail', email);
-                sessionStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userData', JSON.stringify(userData));
+                localStorage.setItem('userEmail', email);
+                localStorage.setItem('isLoggedIn', 'true');
                 
                 // Store token if available
                 if (token) {
-                    sessionStorage.setItem('authToken', token);
+                    localStorage.setItem('authToken', token);
                     console.log('Token saved successfully!');
                 } else {
                     console.warn('No token received in Authorization header');
@@ -114,10 +114,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Optional: Check if user is already logged in
-    const isLoggedIn = sessionStorage.getItem('isLoggedIn') || localStorage.getItem('isLoggedIn');
-    if (isLoggedIn === 'true') {
-        console.log('User already logged in, redirecting...');
-        // User is already logged in, redirect to home
-        window.location.href = 'index.html';
-    }
+   // At the bottom of login.js, REPLACE the existing check with:
+const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+const authToken = localStorage.getItem('authToken');
+
+if (isLoggedIn && authToken) {
+    console.log('User already logged in, redirecting...');
+    window.location.href = 'index.html';
+}
 });

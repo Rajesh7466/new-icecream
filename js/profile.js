@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Get user data from sessionStorage
-    const userDataJson = sessionStorage.getItem('userData');
+    // Get user data from localStorage
+    const userDataJson = localStorage.getItem('userData');
     
     if (!userDataJson) {
         console.error('No user data found');
@@ -252,9 +252,9 @@ function showEditAddressModal(address, addressType, isDefault) {
         const form = modal.querySelector('#editAddressForm');
         const formData = new FormData(form);
         
-        // Get user email and auth token from sessionStorage
-        const userEmail = sessionStorage.getItem('userEmail');
-        const authToken = sessionStorage.getItem('authToken');
+        // Get user email and auth token from localStorage
+        const userEmail = localStorage.getItem('userEmail');
+        const authToken = localStorage.getItem('authToken');
         
         if (!userEmail || !authToken) {
             alert('Session expired. Please login again.');
@@ -297,10 +297,10 @@ function showEditAddressModal(address, addressType, isDefault) {
                 if (index !== -1) {
                     window.userAddresses[index] = updatedAddress;
                     
-                    // Update userData in sessionStorage
-                    const userData = JSON.parse(sessionStorage.getItem('userData'));
+                    // Update userData in localStorage
+                    const userData = JSON.parse(localStorage.getItem('userData'));
                     userData.adresses = window.userAddresses;
-                    sessionStorage.setItem('userData', JSON.stringify(userData));
+                localStorage.setItem('userData', JSON.stringify(userData));
                     
                     // Update display
                     updateAddresses(window.userAddresses);
@@ -408,9 +408,9 @@ function showAddAddressModal() {
         
         const formData = new FormData(form);
         
-        // Get user email and auth token from sessionStorage
-        const userEmail = sessionStorage.getItem('userEmail');
-        const authToken = sessionStorage.getItem('authToken');
+        // Get user email and auth token from localStorage
+        const userEmail = localStorage.getItem('userEmail');
+        const authToken = localStorage.getItem('authToken');
         
         if (!userEmail || !authToken) {
             alert('Session expired. Please login again.');
@@ -470,10 +470,10 @@ function showAddAddressModal() {
                 
                 window.userAddresses.push(newAddress);
                 
-                // Update userData in sessionStorage
-                const userData = JSON.parse(sessionStorage.getItem('userData'));
+                // Update userData in localStorage
+                const userData = JSON.parse(localStorage.getItem('userData'));
                 userData.adresses = window.userAddresses;
-                sessionStorage.setItem('userData', JSON.stringify(userData));
+                localStorage.setItem('userData', JSON.stringify(userData));
                 
                 // Update the display
                 updateAddresses(window.userAddresses);
@@ -520,7 +520,7 @@ function showAddAddressModal() {
 
 async function deleteAddress(addressId) {
     if (confirm('Are you sure you want to delete this address?')) {
-        const authToken = sessionStorage.getItem('authToken');
+        const authToken = localStorage.getItem('authToken');
         
         if (!authToken) {
             alert('Session expired. Please login again.');
@@ -540,10 +540,10 @@ async function deleteAddress(addressId) {
             if (response.ok) {
                 window.userAddresses = window.userAddresses.filter(a => a.id !== addressId);
                 
-                // Update userData in sessionStorage
-                const userData = JSON.parse(sessionStorage.getItem('userData'));
+                // Update userData in localStorage
+                const userData = JSON.parse(localStorage.getItem('userData'));
                 userData.adresses = window.userAddresses;
-                sessionStorage.setItem('userData', JSON.stringify(userData));
+                localStorage.setItem('userData', JSON.stringify(userData));
                 
                 updateAddresses(window.userAddresses);
                 alert('Address deleted successfully!');
@@ -766,8 +766,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            const authToken = sessionStorage.getItem('authToken');
-            const userEmail = sessionStorage.getItem('userEmail');
+            const authToken = localStorage.getItem('authToken');
+            const userEmail = localStorage.getItem('userEmail');
 
             if (!authToken || !userEmail) {
                 alert('Session expired. Please login again.');
@@ -810,3 +810,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// end code for change password
