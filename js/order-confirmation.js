@@ -30,7 +30,8 @@ async function loadOrderDetails() {
     
     if (!orderId) {
         alert('No order found!');
-        window.location.href = 'index.html';
+        // window.location.href = 'index.html';
+         window.location.href = 'order-confirmation.html';
         return;
     }
     

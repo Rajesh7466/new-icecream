@@ -139,20 +139,89 @@
                             </div>
                             <div class="form-group float-left">
                                 <label>State</label>
-                                <select class="form-control" required="">
+                                <select class="form-control" id="state" required>
                                     <option value="" disabled="" selected="" hidden="">Select State</option>
-                                    <option value="California">California</option>
-                                    <option value="Texas">Texas</option>
-                                    <option value="Florida">Florida</option>
+                                    <!-- A -->
+                        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                        <option value="Assam">Assam</option>
+
+                        <!-- B -->
+                        <option value="Bihar">Bihar</option>
+
+                        <!-- C -->
+                        <option value="Chandigarh">Chandigarh</option>
+                        <option value="Chhattisgarh">Chhattisgarh</option>
+
+                        <!-- D -->
+                        <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                        <option value="Delhi">Delhi</option>
+
+                        <!-- G -->
+                        <option value="Goa">Goa</option>
+                        <option value="Gujarat">Gujarat</option>
+
+                                              <!-- H -->
+                        <option value="Haryana">Haryana</option>
+                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+
+                        <!-- J -->
+                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                        <option value="Jharkhand">Jharkhand</option>
+
+                        <!-- K -->
+                        <option value="Karnataka">Karnataka</option>
+                        <option value="Kerala">Kerala</option>
+
+                        <!-- L -->
+                        <option value="Ladakh">Ladakh</option>
+                        <option value="Lakshadweep">Lakshadweep</option>
+
+                        <!-- M -->
+                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Manipur">Manipur</option>
+                        <option value="Meghalaya">Meghalaya</option>
+                        <option value="Mizoram">Mizoram</option>
+
+                        <!-- N -->
+                        <option value="Nagaland">Nagaland</option>
+
+                        <!-- O -->
+                        <option value="Odisha">Odisha</option>
+
+                        <!-- P -->
+                        <option value="Puducherry">Puducherry</option>
+                        <option value="Punjab">Punjab</option>
+
+                        <!-- R -->
+                        <option value="Rajasthan">Rajasthan</option>
+
+                        <!-- S -->
+                        <option value="Sikkim">Sikkim</option>
+
+                        <!-- T -->
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Telangana">Telangana</option>
+                        <option value="Tripura">Tripura</option>
+
+                        <!-- U -->
+                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                        <option value="Uttarakhand">Uttarakhand</option>
+
+                        <!-- W -->
+                        <option value="West Bengal">West Bengal</option>
+    
                                 </select>
                             </div>
                             <div class="form-group input1 float-left">
                                 <label>City</label>
-                                <select class="form-control" required="">
+                                <select class="form-control" id="city" required>
                                     <option value="" disabled="" selected="" hidden="">Select City</option>
-                                    <option value="Los Angeles">Los Angeles</option>
+                                    <!-- <option value="Los Angeles">Los Angeles</option>
                                     <option value="San Francisco">San Francisco</option>
-                                    <option value="San Diego">San Diego</option>
+                                    <option value="San Diego">San Diego</option> -->
                                 </select>
                             </div>
                             <div class="form-group float-left">
@@ -220,7 +289,7 @@
                 </div>
             </div>
             <div class="col-lg-4 col-12">
-                <div class="cart-total-outer" data-aos="fade-up">
+                <!-- <div class="cart-total-outer" data-aos="fade-up">
                     <div class="top-heading">
                         <span class="product-items">Items</span>
                         <span class="product-prices">Price</span>
@@ -271,11 +340,29 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
+           
+            <!-- my code start -->
+             <div class="list-items">
+    <div class="top-heading">
+        <span class="product-items">Items</span>
+        <span class="product-prices">Price</span>
+    </div>
+    
+    <!-- DELETE ALL <div class="each-item"> elements below -->
+    <!-- Including Classic Vanilla, Chocolate, Strawberry, Mint -->
+    <!-- Including the Grand Total item -->
+    <!-- Leave only the top-heading above -->
+    <!-- JavaScript will fill everything dynamically -->
+</div>
+             <!-- my code is end -->
+           
             </div>
         </div>
     </div>
 </div>
+
+
 <!-- Footer -->
 <section class="footer-con position-relative">
     <figure class="footer-image mb-0">
@@ -351,6 +438,60 @@
 <script src="js/cart-badge.js"></script>
 <script src="js/checkout.js"></script>
  <!-- js link -->
+
+
+ <!-- for script state and city start -->
+  <script>
+const stateCityMap = {
+  "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur", "Tirupati"],
+  "Arunachal Pradesh": ["Itanagar", "Naharlagun", "Pasighat"],
+  "Assam": ["Guwahati", "Silchar", "Dibrugarh"],
+  "Bihar": ["Patna", "Gaya", "Bhagalpur"],
+  "Chhattisgarh": ["Raipur", "Bilaspur", "Durg"],
+  "Goa": ["Panaji", "Margao", "Vasco da Gama"],
+  "Gujarat": ["Ahmedabad", "Surat", "Vadodara", "Rajkot"],
+  "Haryana": ["Gurugram", "Faridabad", "Panipat"],
+  "Himachal Pradesh": ["Shimla", "Manali", "Dharamshala"],
+  "Jharkhand": ["Ranchi", "Jamshedpur", "Dhanbad"],
+  "Karnataka": ["Bengaluru", "Mysuru", "Mangalore"],
+  "Kerala": ["Thiruvananthapuram", "Kochi", "Kozhikode"],
+  "Madhya Pradesh": ["Bhopal", "Indore", "Gwalior"],
+  "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Nashik"],
+  "Odisha": ["Bhubaneswar", "Cuttack", "Rourkela"],
+  "Punjab": ["Amritsar", "Ludhiana", "Jalandhar"],
+  "Rajasthan": ["Jaipur", "Udaipur", "Jodhpur"],
+  "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai"],
+  "Telangana": ["Hyderabad", "Warangal", "Karimnagar"],
+  "Uttar Pradesh": ["Lucknow", "Kanpur", "Varanasi", "Noida"],
+  "Uttarakhand": ["Dehradun", "Haridwar", "Nainital"],
+  "West Bengal": ["Kolkata", "Siliguri", "Howrah"],
+  "Delhi": ["New Delhi", "Dwarka", "Rohini"],
+  "Jammu and Kashmir": ["Srinagar", "Jammu"]
+};
+
+// find the dropdowns
+// ✅ find the correct dropdowns
+const stateSelect = document.getElementById("state");
+const citySelect = document.getElementById("city");
+
+
+// when state changes
+stateSelect.addEventListener("change", function() {
+  const cities = stateCityMap[this.value] || [];
+  
+  // clear old cities
+  citySelect.innerHTML = '<option value="" disabled selected hidden>Select City</option>';
+  
+  // add new cities
+  cities.forEach(city => {
+    const opt = document.createElement("option");
+    opt.value = city;
+    opt.textContent = city;
+    citySelect.appendChild(opt);
+  });
+});
+</script>
+  <!-- for script state and city end code  -->
 </body>
 
  

@@ -223,6 +223,13 @@ async function placeOrder(orderRequest) {
         if (response && response.status === 201) {
             const orderData = await response.json();
             console.log('Order placed successfully:', orderData);
+
+             // ADD THESE CONSOLE LOGS
+                 console.log('===== ORDER RESPONSE =====');
+                 console.log('Full response:', orderData);
+                 console.log('Order ID:', orderData.orderId);
+                 console.log('Order ID type:', typeof orderData.orderId);
+                 console.log('==========================');
             
             // Store order data for confirmation page
             sessionStorage.setItem('lastOrder', JSON.stringify(orderData));
