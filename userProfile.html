@@ -427,6 +427,8 @@
         }
         
         .badge {
+            /* background: none !important;
+            color: #222 !important; */
             width: 100px;
             height: 70px;
             border-radius: 50%;
@@ -609,6 +611,137 @@
         width: 100%;
     }
 }
+
+
+/* === Order Section Styling === */
+#orders {
+  margin-top: 2rem;
+  font-family: "Poppins", sans-serif;
+}
+
+#orders h5 {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Order Card */
+.order-item {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  padding: 1.2rem;
+}
+
+.order-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Order Header */
+.order-item h6 {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #222;
+  margin: 0;
+}
+
+.order-item small {
+  color: #666;
+}
+
+.order-item strong {
+  color: #444;
+}
+
+/* Badges */
+.badge {
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+}
+
+.bg-warning.text-dark { background-color: #fcd34d; color: #222; }
+.bg-info { background-color: #60a5fa; color: #fff; }
+.bg-primary { background-color: #2563eb; color: #fff; }
+.bg-success { background-color: #16a34a; color: #fff; }
+.bg-danger { background-color: #dc2626; color: #fff; }
+.bg-secondary { background-color: #9ca3af; color: #fff; }
+
+/* Buttons */
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: background 0.3s ease;
+}
+
+button.view-btn {
+  background-color: #2563eb;
+  color: #fff;
+}
+
+button.view-btn:hover {
+  background-color: #1e40af;
+}
+
+button.cancel-btn {
+  background-color: #ef4444;
+  color: #fff;
+}
+
+button.cancel-btn:hover {
+  background-color: #b91c1c;
+}
+
+/* Modal */
+.custom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.custom-modal-content {
+  background: #fff;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 700px;
+  padding: 20px;
+  position: relative;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: scale(0.95);}
+  to {opacity: 1; transform: scale(1);}
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  color: #333;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border: none;
+}
     </style>
 </head>
 <body>
@@ -720,6 +853,7 @@
        data-bs-target="#changePasswordModal">
        Change Password
     </a>
+    
 </div>
 
                 </section>
@@ -1152,7 +1286,6 @@
 // Load order history in profile page
 async function loadOrderHistoryInProfile() {
     const email = getUserEmail();
-    
     try {
         const response = await makeApiCall(
             API_CONFIG.ENDPOINTS.ORDER_HISTORY(email),
@@ -1160,7 +1293,6 @@ async function loadOrderHistoryInProfile() {
             null,
             true
         );
-        
         if (response && response.ok) {
             const orders = await response.json();
             displayOrderHistory(orders);
@@ -1177,41 +1309,32 @@ function displayOrderHistory(orders) {
     const ordersList = ordersSection.querySelector('.order-item') ? 
                        ordersSection.querySelector('.order-item').parentElement : ordersSection;
     
-    // Clear existing dummy orders
-    ordersList.innerHTML = '<h5 class="mb-3">Your Orders</h5>';
+    ordersList.innerHTML = '<h5>Your Orders</h5>';
     
     if (orders.length === 0) {
-        ordersList.innerHTML += '<p class="text-muted">No orders yet. Start shopping!</p>';
+        ordersList.innerHTML += '<p style="text-align:center;color:#666;">No orders yet. Start shopping!</p>';
         return;
     }
     
     orders.forEach(order => {
         const statusBadge = getStatusBadgeClass(order.status);
         const orderHTML = `
-            <div class="order-item border rounded p-3 mb-3">
-                <div class="d-flex justify-content-between align-items-start mb-2">
+            <div class="order-item">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
                     <div>
-                        <h6 class="mb-1">Order #${order.orderId}</h6>
-                        <small class="text-muted">${formatDate(order.orderDate)}</small>
+                        <h6>Order #${order.orderId}</h6>
+                        <small>${formatDate(order.orderDate)}</small>
                     </div>
                     <span class="badge ${statusBadge}">${order.status}</span>
                 </div>
-                
-                <div class="mb-2">
-                    <strong>Items:</strong> ${order.items.length}
-                    <br>
+                <div style="margin-top:8px;">
+                    <strong>Items:</strong> ${order.items.length}<br>
                     <strong>Total:</strong> ${formatPrice(order.totalAmount)}
                 </div>
-                
-                <div class="d-flex gap-2">
-                    <button class="btn btn-sm btn-outline-primary" onclick="viewOrderDetails(${order.orderId})">
-                        View Details
-                    </button>
-                    ${order.status === 'PENDING' ? `
-                        <button class="btn btn-sm btn-outline-danger" onclick="cancelOrderFromProfile(${order.orderId})">
-                            Cancel Order
-                        </button>
-                    ` : ''}
+                <div style="margin-top:10px;display:flex;gap:10px;">
+                    <button class="view-btn" onclick="viewOrderDetails(${order.orderId})">View Details</button>
+                    ${order.status === 'PENDING' ? 
+                      `<button class="cancel-btn" onclick="cancelOrderFromProfile(${order.orderId})">Cancel Order</button>` : ''}
                 </div>
             </div>
         `;
@@ -1233,126 +1356,98 @@ function getStatusBadgeClass(status) {
 
 async function viewOrderDetails(orderId) {
     const email = getUserEmail();
-    
     try {
-        showLoadingSpinner();
-        
         const response = await makeApiCall(
             API_CONFIG.ENDPOINTS.ORDER_DETAILS(orderId, email),
             'GET',
             null,
             true
         );
-        
-        hideLoadingSpinner();
-        
         if (response && response.ok) {
             const order = await response.json();
             showOrderDetailsModal(order);
         }
     } catch (error) {
-        hideLoadingSpinner();
-        showMessage('Error loading order details', 'danger');
+        console.error('Error loading details', error);
     }
 }
 
 function showOrderDetailsModal(order) {
-    const modal = `
-        <div class="modal fade" id="orderDetailsModal" tabindex="-1">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Order #${order.orderId}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <strong>Order Date:</strong> ${formatDate(order.orderDate)}<br>
-                            <strong>Status:</strong> <span class="badge ${getStatusBadgeClass(order.status)}">${order.status}</span><br>
-                            <strong>Payment:</strong> ${order.paymentType}<br>
-                            <strong>Delivery Address:</strong> ${order.deliveryAddress}
-                        </div>
-                        
-                        <h6>Order Items:</h6>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th>Subtotal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${order.items.map(item => `
-                                    <tr>
-                                        <td>${item.productName}</td>
-                                        <td>${item.quantity}</td>
-                                        <td>${formatPrice(item.price)}</td>
-                                        <td>${formatPrice(item.subtotal)}</td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="3" class="text-end">Total:</th>
-                                    <th>${formatPrice(order.totalAmount)}</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
+    const modalHTML = `
+        <div class="custom-modal" id="orderDetailsModal">
+            <div class="custom-modal-content">
+                <button class="close-modal" onclick="closeOrderModal()">×</button>
+                <h3>Order #${order.orderId}</h3>
+                <p><strong>Order Date:</strong> ${formatDate(order.orderDate)}</p>
+                <p><strong>Status:</strong> <span class="badge ${getStatusBadgeClass(order.status)}">${order.status}</span></p>
+                <p><strong>Payment:</strong> ${order.paymentType}</p>
+                <p><strong>Delivery Address:</strong> ${order.deliveryAddress}</p>
+
+                <h4 style="margin-top:15px;">Order Items:</h4>
+                <table style="width:100%;border-collapse:collapse;margin-top:10px;">
+                    <thead>
+                        <tr style="background:#f3f4f6;">
+                            <th style="text-align:left;padding:8px;">Product</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${order.items.map(item => `
+                            <tr>
+                                <td style="padding:8px;">${item.productName}</td>
+                                <td style="text-align:center;">${item.quantity}</td>
+                                <td style="text-align:center;">${formatPrice(item.price)}</td>
+                                <td style="text-align:center;">${formatPrice(item.subtotal)}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                    <tfoot>
+                        <tr style="border-top:1px solid #ddd;">
+                            <th colspan="3" style="text-align:right;padding:8px;">Total:</th>
+                            <th>${formatPrice(order.totalAmount)}</th>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div style="text-align:right;margin-top:15px;">
+                    <button onclick="closeOrderModal()" class="cancel-btn">Close</button>
                 </div>
             </div>
         </div>
     `;
     
-    // Remove existing modal if any
     const existingModal = document.getElementById('orderDetailsModal');
-    if (existingModal) {
-        existingModal.remove();
-    }
-    
-    document.body.insertAdjacentHTML('beforeend', modal);
-    const modalElement = new bootstrap.Modal(document.getElementById('orderDetailsModal'));
-    modalElement.show();
+    if (existingModal) existingModal.remove();
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+function closeOrderModal() {
+    const modal = document.getElementById('orderDetailsModal');
+    if (modal) modal.remove();
 }
 
 async function cancelOrderFromProfile(orderId) {
-    if (!confirm('Are you sure you want to cancel this order?')) {
-        return;
-    }
-    
+    if (!confirm('Are you sure you want to cancel this order?')) return;
     const email = getUserEmail();
-    
     try {
-        showLoadingSpinner();
-        
         const response = await makeApiCall(
             API_CONFIG.ENDPOINTS.CANCEL_ORDER(orderId, email),
             'PUT',
             null,
             true
         );
-        
-        hideLoadingSpinner();
-        
         if (response && response.ok) {
-            showMessage('Order cancelled successfully', 'success');
-            loadOrderHistoryInProfile(); // Reload orders
+            alert('Order cancelled successfully');
+            loadOrderHistoryInProfile();
         } else {
-            const error = await response.text();
-            showMessage(error || 'Failed to cancel order', 'danger');
+            alert('Failed to cancel order');
         }
     } catch (error) {
-        hideLoadingSpinner();
-        showMessage('Network error', 'danger');
+        alert('Network error');
     }
 }
 
-// Load order history when orders section is shown
 document.addEventListener('DOMContentLoaded', function() {
     const ordersLink = document.querySelector('a[href="#orders"]');
     if (ordersLink) {
