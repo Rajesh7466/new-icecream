@@ -61,68 +61,54 @@ async function loadCheckoutCart() {
 
 function displayOrderSummary(cart) {
     const summaryContainer = document.querySelector('.list-items');
-    
+
     if (!summaryContainer) {
         console.error('Order summary container not found');
         return;
     }
-    
-    // Clear existing items (keep only the first child which is the heading)
-    const heading = summaryContainer.querySelector('.top-heading');
+
     summaryContainer.innerHTML = '';
-    if (heading) {
-        summaryContainer.appendChild(heading);
-    }
-    
-    // Add each item
+
     cart.items.forEach(item => {
         const itemHTML = `
-            <div class="each-item">
+            <div class="each-item" style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #eee; padding: 10px 0;">
                 <div class="product-items">
                     <span class="heading">${item.quantity} x ${item.productName}</span>
                     <p class="text-size-14 mb-0">Price: ${formatPrice(item.productPrice)} each</p>
                 </div>
-                <div class="product-prices">
+                <div class="product-actions" style="display: flex; align-items: center; gap: 10px;">
                     <span class="dollar">${formatPrice(item.subtotal)}</span>
+                    <button class="delete-btn" data-id="${item.cartItemId}" style="background: none; border: none; color: #f83d8e; cursor: pointer; font-size: 18px;">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </div>
             </div>
         `;
         summaryContainer.innerHTML += itemHTML;
     });
-    
-    // Add grand total
+
     const shipping = 20.00;
     const grandTotal = cart.totalAmount + shipping;
-    
+
     const totalHTML = `
         <div class="each-item" style="border-top: 2px solid #ddd; padding-top: 15px; margin-top: 15px;">
-            <div class="product-items">
-                <span class="heading">Subtotal</span>
-            </div>
-            <div class="product-prices">
-                <span class="dollar">${formatPrice(cart.totalAmount)}</span>
-            </div>
+            <div class="product-items"><span class="heading">Subtotal</span></div>
+            <div class="product-prices"><span class="dollar">${formatPrice(cart.totalAmount)}</span></div>
         </div>
-        <div class="each-item">
-            <div class="product-items">
-                <span class="heading">Shipping</span>
-            </div>
-            <div class="product-prices">
-                <span class="dollar">${formatPrice(shipping)}</span>
-            </div>
+        <div class="each-item"><div class="product-items"><span class="heading">Shipping</span></div>
+            <div class="product-prices"><span class="dollar">${formatPrice(shipping)}</span></div>
         </div>
         <div class="each-item" style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-            <div class="product-items">
-                <span class="heading" style="font-size: 20px; font-weight: 700;">Grand Total</span>
-            </div>
-            <div class="product-prices">
-                <span class="dollar total-price" style="font-size: 24px; font-weight: 700; color: #f83d8e;">${formatPrice(grandTotal)}</span>
-            </div>
+            <div class="product-items"><span class="heading" style="font-size: 20px; font-weight: 700;">Grand Total</span></div>
+            <div class="product-prices"><span class="dollar total-price" style="font-size: 24px; font-weight: 700; color: #f83d8e;">${formatPrice(grandTotal)}</span></div>
         </div>
     `;
-    
     summaryContainer.innerHTML += totalHTML;
+
+    // Attach delete button listeners
+    setupDeleteButtons();
 }
+
 
 function prefillUserDetails() {
     const userData = localStorage.getItem('userData');
@@ -202,6 +188,43 @@ function buildDeliveryAddress(formData) {
     
     return `${fname} ${lname}, ${email}, ${city}, ${state}, ${code}, India`;
 }
+
+
+// delete fuction button code start
+function setupDeleteButtons() {
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', async (e) => {
+            const cartItemId = e.currentTarget.getAttribute('data-id');
+            const email = getUserEmail();
+
+            if (!confirm('Remove this item from your cart?')) return;
+
+            try {
+                const response = await makeApiCall(
+                    API_CONFIG.ENDPOINTS.REMOVE_FROM_CART(cartItemId, email),
+                    'DELETE',
+                    null,
+                    true
+                );
+
+                if (response && response.ok) {
+                    showMessage('Item removed from cart', 'success');
+                    loadCheckoutCart(); // Refresh the list
+                    updateCartBadge(); // Update cart count
+                } else {
+                    showMessage('Failed to remove item', 'danger');
+                }
+            } catch (error) {
+                console.error('Error removing item:', error);
+                showMessage('Network error while removing item', 'danger');
+            }
+        });
+    });
+}
+
+// delete fuction button code end
+
 
 async function placeOrder(orderRequest) {
     const email = getUserEmail();

@@ -102,6 +102,9 @@ async function addToCart(productId, productName, productPrice, productImage, qua
         } else {
             const errorMessage = await response.text();
             showMessage(errorMessage || 'Failed to add to cart', 'danger');
+            // alert("please login first then add to cart");
+            // localStorage.clear();
+            // window.location.replace('login.html');
         }
     } catch (error) {
         hideLoadingSpinner();
