@@ -195,8 +195,20 @@ function setupDeleteButtons() {
     const deleteButtons = document.querySelectorAll('.delete-btn');
     deleteButtons.forEach(button => {
         button.addEventListener('click', async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
             const cartItemId = e.currentTarget.getAttribute('data-id');
             const email = getUserEmail();
+            const token = getAuthToken();
+
+            console.log('Deleting item:', cartItemId, 'for user:', email);
+            console.log('Auth token used for delete:', token);
+
+            if (!email || !token) {
+                showMessage('User not authenticated. Please login again.', 'danger');
+                return;
+            }
 
             if (!confirm('Remove this item from your cart?')) return;
 
@@ -210,9 +222,14 @@ function setupDeleteButtons() {
 
                 if (response && response.ok) {
                     showMessage('Item removed from cart', 'success');
-                    loadCheckoutCart(); // Refresh the list
-                    updateCartBadge(); // Update cart count
+                    // Wait briefly for DB to update
+                    setTimeout(() => {
+                        loadCheckoutCart();
+                        updateCartBadge();
+                    }, 150);
                 } else {
+                    const errText = await response.text();
+                    console.error('Delete failed:', errText);
                     showMessage('Failed to remove item', 'danger');
                 }
             } catch (error) {
@@ -222,6 +239,7 @@ function setupDeleteButtons() {
         });
     });
 }
+
 
 // delete fuction button code end
 
