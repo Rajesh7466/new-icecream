@@ -3,7 +3,7 @@
 // ═══════════════════════════════════════════════════════════════
 
 const API_CONFIG = {
-    BASE_URL: 'http://localhost:8081', // Change this to your backend URL
+    BASE_URL: 'https://spring-security-6eii.onrender.com', // Change this to your backend URL
     ENDPOINTS: {
         // Cart endpoints
         ADD_TO_CART: (email) => `/cart/add/${email}`,
