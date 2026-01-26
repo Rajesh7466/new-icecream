@@ -282,7 +282,7 @@ function showEditAddressModal(address, addressType, isDefault) {
         
         try {
             // Make API call to update address (adjust endpoint as needed for your backend)
-            const response = await fetch(`https://spring-security-6eii.onrender.com/adress/update/${address.id}`, {
+            const response = await fetch(` https://spring-security-40w0.onrender.com/adress/update/${address.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -776,7 +776,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             try {
-                const response = await fetch(`https://spring-security-6eii.onrender.com/user/change/password/${userEmail}`, {
+                const response = await fetch(` https://spring-security-40w0.onrender.com/user/change/password/${userEmail}`, {
                     method: 'POST', // or PUT depending on your backend
                     headers: {
                         'Content-Type': 'application/json',
