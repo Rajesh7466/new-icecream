@@ -6,13 +6,13 @@ document.addEventListener("DOMContentLoaded", function() {
     // Get current page name
     const currentPage = window.location.pathname.split('/').pop();
     
-    // DON'T redirect if we're already on login or register page
-    if (currentPage === "login.html" || currentPage === "register.html") {
-        console.log("Already on login/register page");  
+    // DON'T redirect if we're already on login, register, or index page
+    if (currentPage === "login.html" || currentPage === "register.html" || currentPage === "index.html") {
+        console.log("On public page or auth page");  
         return;
     }
     
-    // For ALL other pages (including index.html), check authentication
+    // For protected pages, check authentication
     if (!isLoggedIn || !authToken) {
         console.log("Authentication failed. Redirecting to login.html");
         console.log("isLoggedIn:", isLoggedIn, "authToken:", authToken);
