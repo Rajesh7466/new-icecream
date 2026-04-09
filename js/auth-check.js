@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // Get current page name
     const currentPage = window.location.pathname.split('/').pop();
     
-    // DON'T redirect if we're already on login, register, or index page
-    if (currentPage === "login.html" || currentPage === "register.html" || currentPage === "index.html") {
+    // DON'T redirect if we're already on login, register, index page, or root
+    if (currentPage === "login.html" || currentPage === "register.html" || currentPage === "index.html" || currentPage === "") {
         console.log("On public page or auth page");  
         return;
     }
