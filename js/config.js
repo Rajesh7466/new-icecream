@@ -3,7 +3,7 @@
 // ═══════════════════════════════════════════════════════════════
 
 const API_CONFIG = {
-    BASE_URL: ' https://spring-security-40w0.onrender.com', // Change this to your backend URL
+    BASE_URL: '  https://spring-security-40w0.onrender.com', // Change this to your backend URL
     ENDPOINTS: {
         // Cart endpoints
         ADD_TO_CART: (email) => `/cart/add/${email}`,
